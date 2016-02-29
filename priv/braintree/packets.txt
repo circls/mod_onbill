@@ -1,0 +1,4 @@
+yum install python-setuptools python2-devel libffi-devel openssl-devel
+easy_install pip
+pip install requests[security] urllib3
+pip install braintree
