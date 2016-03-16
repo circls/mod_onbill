@@ -10,6 +10,7 @@
 <div class="pl-10 pr-10 col-md-6">
     {# Account status #}
     {% include "onnet_widget_finance.tpl" headline=_"Account" %}
+
     {# Make payment #}
     {% wire action={connect signal={update_onnet_widget_make_payment_tpl} action={update target="onnet_widget_make_payment_tpl" template="onnet_widget_make_payment_lazy.tpl"}} %}
     <span id="onnet_widget_make_payment_tpl">
@@ -20,12 +21,7 @@
 <div id="paytab" class="pl-10 pr-10 col-md-6">
     {# Make invoce #}
     <span id="onnet_widget_make_invoice_tpl">
-      <div class="text-center p-3">
-        {% ilazy class="fa fa-spinner fa-spin fa-3x" action={update target="onnet_widget_make_invoice_tpl" 
-                                                                    template="onnet_widget_make_invoice.tpl" 
-                                                                    headline=_"Wire transfer"}
-        %}
-      </div>
+        {% include "onnet_widget_make_invoice.tpl" headline=_"Wire transfer" %}
     </span>
 
     {# Transactions list #}
