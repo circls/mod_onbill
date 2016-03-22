@@ -14,7 +14,7 @@
     {# Make payment #}
     {% wire action={connect signal={update_onnet_widget_make_payment_tpl} action={update target="onnet_widget_make_payment_tpl" template="onnet_widget_make_payment_lazy.tpl"}} %}
     <span id="onnet_widget_make_payment_tpl">
-      {% include "onnet_widget_make_payment_lazy.tpl" %}
+      {% include "onnet_widget_make_payment.tpl" headline=_"Online payments" %}
     </span>
 </div>
 
@@ -25,6 +25,10 @@
     </span>
 
     {# Transactions list #}
+    {% wire action={connect signal={update_rs_widget_transactions_list_tpl} 
+                    action={update target="rs_widget_transactions_list_tpl" template="rs_widget_transactions_list.tpl" headline=_"Transactions list"}
+                   }
+    %}
     <span id="rs_widget_transactions_list_tpl">
         {% include "rs_widget_transactions_list.tpl" headline=_"Transactions list" %}
     </span>
