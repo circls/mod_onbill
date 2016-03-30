@@ -11,6 +11,9 @@
 
 -include_lib("zotonic.hrl").
 
+m_find_value(crossbar_listing, _M, Context) ->
+    onbill_util:crossbar_listing(Context);
+
 m_find_value(_V, _VV, _Context) ->
     lager:info("m_find_value _V: ~p", [_V]),
     lager:info("m_find_value _VV: ~p", [_VV]),
