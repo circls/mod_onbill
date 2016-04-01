@@ -14,10 +14,10 @@
 m_find_value(crossbar_listing, _M, Context) ->
     onbill_util:crossbar_listing(Context);
 
-m_find_value({z_recording_download_link, [{cdr_id, CallId}]}, _M, Context) ->
+m_find_value({attachment_download_link, [{doc_id, DocId}]}, _M, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
     AuthToken = z_context:get_session(kazoo_auth_token, Context),
-    onbill_util:kz_kzattachment_link(AccountId, CallId, AuthToken, "call_recording", Context);
+    onbill_util:onbill_attachment_link(AccountId, DocId, AuthToken, "onbill_doc", Context);
 
 m_find_value(_V, _VV, _Context) ->
     lager:info("m_find_value _V: ~p", [_V]),
