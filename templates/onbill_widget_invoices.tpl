@@ -20,7 +20,7 @@
     <tbody>
       {% for doc in m.onbill.crossbar_listing %}
         <tr>
-            <td><a href="/kzattachment/id/{{ doc["id"] }}">{{ doc["name"] }}</a></td>
+            <td><a href="{{ m.onbill[{attachment_download_link doc_id=doc["id"]}] }}">{{ doc["name"] }}</a></td>
             <td><a href="/kzattachment/id/{{ doc["id"] }}">{{ doc["name"] }}</a></td>
             <td><a href="/kzattachment/id/{{ doc["id"] }}">{{ doc["name"] }}</a></td>
             <td><a href="/kzattachment/id/{{ doc["id"] }}">{{ doc["name"] }}</a></td>

@@ -38,7 +38,7 @@ onbill_attachment_link(DocId, DocType, Context) ->
 onbill_attachment_link(AccountId, DocId, AuthToken, DocType, Context) ->
     API_String = <<"/kzattachment?"
                    ,"account_id=", (z_convert:to_binary(AccountId))/binary
-                   ,"&call_id=", (z_convert:to_binary(DocId))/binary
+                   ,"&doc_id=", (z_convert:to_binary(DocId))/binary
                    ,"&auth_token=", (z_convert:to_binary(AuthToken))/binary
                    ,"&doc_type=", (z_convert:to_binary(DocType))/binary
                  >>,
