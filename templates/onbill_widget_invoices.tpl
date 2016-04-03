@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-      {% for doc in m.onbill.crossbar_listing %}
+      {% for doc in m.onbill[{crossbar_listing year=year month=month}] %}
         <tr>
             <td><a href="{{ m.onbill[{attachment_download_link doc_id=doc["id"] year=year month=month}] }}">{{ doc["name"] }}</a></td>
             <td><a href="/kzattachment/id/{{ doc["id"] }}">{{ headline }}</a></td>
