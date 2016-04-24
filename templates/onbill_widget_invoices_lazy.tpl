@@ -5,4 +5,4 @@
                                                                     month=m.signal[signal].month
                                                                     headline=_"Invoices"}
         %}
-      </div>
+    </div>

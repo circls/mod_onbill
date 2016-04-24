@@ -52,6 +52,6 @@
 
 </div>
 
-{% print m.onbill.crossbar_listing %}
+{% print m.onbill[{crossbar_listing year=year month=month}] %}
 
 {% endblock %}

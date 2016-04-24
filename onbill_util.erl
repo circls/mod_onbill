@@ -5,6 +5,7 @@
          ,crossbar_listing/4
          ,onbill_attachment/6
          ,onbill_attachment_link/5
+         ,onbill_attachment_link/6
          ,onbill_attachment_link/7
 ]).
 
@@ -46,6 +47,15 @@ onbill_attachment_link(DocId, DocType, 'undefined', 'undefined', Context) ->
 
 onbill_attachment_link(DocId, DocType, Year, Month, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
+    AuthToken = z_context:get_session(kazoo_auth_token, Context),
+    onbill_attachment_link(AccountId, DocId, AuthToken, DocType, Year, Month, Context).
+
+onbill_attachment_link(AccountId, DocId, DocType, 'undefined', 'undefined', Context) ->
+    Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
+    {{Year,Month,_}, _} = localtime:local_to_local(calendar:gregorian_seconds_to_datetime(calendar:datetime_to_gregorian_seconds(calendar:universal_time())), "UTC", Timezone), 
+    onbill_attachment_link(AccountId, DocId, DocType, Year, Month, Context);
+
+onbill_attachment_link(AccountId, DocId, DocType, Year, Month, Context) ->
     AuthToken = z_context:get_session(kazoo_auth_token, Context),
     onbill_attachment_link(AccountId, DocId, AuthToken, DocType, Year, Month, Context).
 
