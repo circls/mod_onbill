@@ -16,7 +16,3 @@
 
 {% include  "rs_widget_acts_lazy.tpl" year=year month=month %}
 
-{% print related_documents_month_chosen %}
-{% print account_id %}
-{% print year %}
-{% print month %}

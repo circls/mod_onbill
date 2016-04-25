@@ -28,6 +28,11 @@ crossbar_listing(Year, Month, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
     crossbar_listing(AccountId, Year, Month, Context).
 
+crossbar_listing(AccountId, 'undefined', 'undefined', Context) ->
+    Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
+    {{Year,Month,_}, _} = localtime:local_to_local(calendar:gregorian_seconds_to_datetime(calendar:datetime_to_gregorian_seconds(calendar:universal_time())), "UTC", Timezone), 
+    crossbar_listing(AccountId, Year, Month, Context);
+
 crossbar_listing(AccountId, Year, Month, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary
                    ,"?year=",(z_convert:to_binary(Year))/binary,"&month=",(z_convert:to_binary(Month))/binary>>,
