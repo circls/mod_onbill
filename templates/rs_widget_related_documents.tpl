@@ -14,6 +14,13 @@
                                    class="arrowpad fa fa-arrow-circle-down"></i>
   </span>
     {{ headline }}
+    {% button class="btn btn-xs btn-onnet" text=_"create" 
+              action={postback postback={generate_rs_related_documents account_id}
+                               delegate="mod_onbill"
+                               qarg="related_documents_month_chosen"
+                               inject_args account_id=account_id
+                     }
+    %}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"send request" 
               action={postback postback={refresh_rs_related_documents account_id}
                                delegate="mod_onbill"

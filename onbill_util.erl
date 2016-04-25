@@ -7,9 +7,12 @@
          ,onbill_attachment_link/5
          ,onbill_attachment_link/6
          ,onbill_attachment_link/7
+         ,generate_monthly_docs/4
 ]).
 
 -include_lib("zotonic.hrl").
+
+-define(MK_DATABAG(JObj), {[{<<"data">>, JObj}]}).
 
 -define(V1, <<"/v1">>).
 -define(V2, <<"/v2">>).
@@ -17,6 +20,7 @@
 -define(ONBILLS, <<"/onbills">>).
 -define(INVOICE, <<"/invoice">>).
 -define(ATTACHMENT, <<"/attachment">>).
+-define(GENERATE, <<"/generate">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
@@ -75,3 +79,7 @@ onbill_attachment_link(AccountId, DocId, AuthToken, DocType, Year, Month, Contex
                  >>,
     <<"https://", (z_convert:to_binary(z_dispatcher:hostname(Context)))/binary, API_String/binary>>.
 
+generate_monthly_docs(AccountId, Year, Month, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary, ?GENERATE/binary>>,
+    DataBag = ?MK_DATABAG({[{<<"year">>, Year},{<<"month">>, Month}]}),
+    kazoo_util:crossbar_account_request('put', API_String, DataBag, Context).
