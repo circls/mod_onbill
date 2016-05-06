@@ -18,10 +18,10 @@ m_find_value({crossbar_listing, [{account_id, AccountId}, {year, Year},{month, M
     onbill_util:crossbar_listing(AccountId, Year, Month, Context);
 
 m_find_value({attachment_download_link, [{doc_id, DocId},{year, Year},{month, Month}]}, _M, Context) ->
-    onbill_util:onbill_attachment_link(DocId, "onbill_doc", Year, Month, Context);
+    onbill_util:onbill_attachment_link(DocId, "onbill", Year, Month, Context);
 
 m_find_value({attachment_download_link, [{account_id, AccountId}, {doc_id, DocId},{year, Year},{month, Month}]}, _M, Context) ->
-    onbill_util:onbill_attachment_link(AccountId, DocId, "onbill_doc", Year, Month, Context);
+    onbill_util:onbill_attachment_link(AccountId, DocId, "onbill", Year, Month, Context);
 
 m_find_value(_V, _VV, _Context) ->
     lager:info("m_find_value _V: ~p", [_V]),
