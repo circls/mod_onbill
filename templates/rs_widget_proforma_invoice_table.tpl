@@ -12,8 +12,8 @@
     <tbody>
       {% for doc in m.onbill[{crossbar_listing account_id=account_id year=year month=month}] %}
         <tr>
-            <td><a target="_blank" href="{{ m.onbill[{attachment_download_link doc_id=doc["id"] year=year month=month}] }}">{{ doc["type"] }}</a></td>
-            <td><a target="_blank" href="{{ m.onbill[{attachment_download_link doc_id=doc["id"] year=year month=month}] }}">{{ doc["oper_name_short"] }}</a></td>
+            <td><a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["type"] }}</a></td>
+            <td><a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["oper_name_short"] }}</a></td>
             <td>{{ doc["doc_date"] }}</td>
             <td>{{ doc["total_netto"] }}</td>
             <td>{{ doc["total_vat"] }}</td>
