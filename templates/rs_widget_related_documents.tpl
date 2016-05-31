@@ -51,7 +51,7 @@
 <div id="rs_related_documents_widget_opened" style="{% if not m.kazoo[{ui_element_opened element="rs_related_documents_widget_opened"}] %}display: none;{% endif %}">
     <div class="text-center p-3">
         {% ilazy class="fa fa-spinner fa-spin fa-3x" action={update target="rs_related_documents_widget_opened"
-                                                                    template="rs_widget_related_documents_table.tpl"
+                                                                    template="rs_widget_related_documents_lazy.tpl"
                                                                     account_id=account_id
                                                                     related_documents_month_chosen=related_documents_month_chosen
                                                                     year=year
