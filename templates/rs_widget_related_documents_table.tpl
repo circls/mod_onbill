@@ -2,11 +2,11 @@
    <thead>
         <tr>
             <th>{_ Type _}</th>
-            <th>{_ Counterparty _}</th>
-            <th>{_ Date _}</th>
-            <th>{_ Sum _}</th>
-            <th>{_ VAT _}</th>
-            <th>{_ Total _}</th>
+            <th class="td-center">{_ Counterparty _}</th>
+            <th class="td-center">{_ Date _}</th>
+            <th class="td-center">{_ Sum _}</th>
+            <th class="td-center">{_ VAT _}</th>
+            <th class="td-center">{_ Total _}</th>
         </tr>
     </thead>
     <tbody>
@@ -15,9 +15,9 @@
             <td><a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["type"] }}</a></td>
             <td><a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["oper_name_short"] }}</a></td>
             <td>{{ doc["doc_date"] }}</td>
-            <td>{{ doc["total_netto"] }}</td>
-            <td>{{ doc["total_vat"] }}</td>
-            <td>{{ doc["total_brutto"] }}</td>
+            <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_netto"] }}</td>
+            <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_vat"] }}</td>
+            <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_brutto"] }}</td>
         </tr>
       {% endfor %}
     </tbody>
