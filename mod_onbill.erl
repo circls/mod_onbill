@@ -32,10 +32,13 @@ event({postback,{refresh_rs_payments_list,[{account_id, AccountId}]},_,_}, Conte
                                      ,Context)
                    ,Context);
 
-event({postback,{generate_rs_related_documents,[{account_id,AccountId}]},_,_}, Context) ->
+event({postback,{generate_rs_related_documents,[{account_id,'undefined'}, {doc_type, DocType}]},_,_}, Context) ->
+    AccountId = z_context:get_session(kazoo_account_id, Context),
+    event({postback,{generate_rs_related_documents,[{account_id,AccountId}, {doc_type, DocType}]},<<>>,<<>>}, Context);
+event({postback,{generate_rs_related_documents,[{account_id,AccountId}, {doc_type, DocType}]},_,_}, Context) ->
     MonthChosen = z_context:get_q("related_documents_month_chosen",Context),
     [Month,Year] = z_string:split(MonthChosen,"/"),
-    _ = onbill_util:generate_monthly_docs(AccountId, Year, Month, Context),
+    _ = onbill_util:generate_monthly_docs(DocType, AccountId, Year, Month, Context),
     mod_signal:emit({update_rs_widget_related_documents_tpl
                      ,[{'account_id',AccountId},{'related_documents_month_chosen',MonthChosen},{'year',Year},{'month',Month}]}
                      ,Context

@@ -14,11 +14,20 @@
                                    class="arrowpad fa fa-arrow-circle-down"></i>
   </span>
     {{ headline }}
-    {% button class="btn btn-xs btn-onnet" text=_"create" 
-              action={postback postback={generate_rs_related_documents account_id}
+    {% if (m.kazoo.kz_current_context_superadmin or m.kazoo.kz_current_context_reseller_status) and m.kazoo.is_kazoo_account_admin %}
+      {% button class="btn btn-xs btn-onnet" text=_"create docs" 
+                action={postback postback={generate_rs_related_documents account_id doc_type}
+                                 delegate="mod_onbill"
+                                 qarg="related_documents_month_chosen"
+                                 inject_args account_id=account_id doc_type="just_an_empty_field_yet"
+                       }
+      %}
+    {% endif %}
+    {% button class="btn btn-xs btn-onnet" text=_"create reports" 
+              action={postback postback={generate_rs_related_documents account_id doc_type}
                                delegate="mod_onbill"
                                qarg="related_documents_month_chosen"
-                               inject_args account_id=account_id
+                               inject_args account_id=account_id doc_type="calls_reports"
                      }
     %}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"send request" 
@@ -38,7 +47,7 @@
                                                     data-date-start-date="-36m"
                                                     data-date-end-date="+0d"
                                                     readonly/>
-    <span class="pull-right pr-05"> {_ Choose month _}: </span>
+    <!-- <span class="pull-right pr-05"> {_ Choose month _}: </span> -->
     {% javascript %}
         $('#related_documents_month_chosen').datepicker();
     {% endjavascript %}

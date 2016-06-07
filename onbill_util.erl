@@ -7,7 +7,7 @@
          ,onbill_attachment_link/5
          ,onbill_attachment_link/6
          ,onbill_attachment_link/7
-         ,generate_monthly_docs/4
+         ,generate_monthly_docs/5
 ]).
 
 -include_lib("zotonic.hrl").
@@ -79,7 +79,7 @@ onbill_attachment_link(AccountId, DocId, AuthToken, DocType, Year, Month, Contex
                  >>,
     <<"https://", (z_convert:to_binary(z_dispatcher:hostname(Context)))/binary, API_String/binary>>.
 
-generate_monthly_docs(AccountId, Year, Month, Context) ->
+generate_monthly_docs(DocType, AccountId, Year, Month, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary, ?GENERATE/binary>>,
-    DataBag = ?MK_DATABAG({[{<<"year">>, Year},{<<"month">>, Month}]}),
+    DataBag = ?MK_DATABAG({[{<<"year">>, Year},{<<"month">>, Month},{<<"doc_type">>, DocType}]}),
     kazoo_util:crossbar_account_request('put', API_String, DataBag, Context).
