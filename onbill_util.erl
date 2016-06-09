@@ -8,6 +8,8 @@
          ,onbill_attachment_link/6
          ,onbill_attachment_link/7
          ,generate_monthly_docs/5
+         ,doc/2
+         ,doc_field/3
 ]).
 
 -include_lib("zotonic.hrl").
@@ -40,6 +42,15 @@ crossbar_listing(AccountId, 'undefined', 'undefined', Context) ->
 crossbar_listing(AccountId, Year, Month, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary
                    ,"?year=",(z_convert:to_binary(Year))/binary,"&month=",(z_convert:to_binary(Month))/binary>>,
+    kazoo_util:crossbar_account_request('get', API_String, [], Context).
+
+doc(DocId, Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    onbill_get_doc(AccountId, DocId, Context).
+
+onbill_get_doc(AccountId, DocId, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
+                   ,?ONBILLS/binary,"/",(z_convert:to_binary(DocId))/binary>>,
     kazoo_util:crossbar_account_request('get', API_String, [], Context).
 
 onbill_attachment(AccountId, DocId, AuthToken, Year, Month, Context) ->
@@ -83,3 +94,13 @@ generate_monthly_docs(DocType, AccountId, Year, Month, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary, ?GENERATE/binary>>,
     DataBag = ?MK_DATABAG({[{<<"year">>, Year},{<<"month">>, Month},{<<"doc_type">>, DocType}]}),
     kazoo_util:crossbar_account_request('put', API_String, DataBag, Context).
+
+doc_field(Field, DocId, Context) when is_binary(Field) ->
+    modkazoo_util:get_value(Field, doc(DocId, Context));
+doc_field(Field, DocId, Context) when is_list(hd(Field)) ->
+    modkazoo_util:get_value([z_convert:to_binary(X) || X <- Field], doc(DocId, Context));
+doc_field(Field, DocId, Context) when is_binary(hd(Field)) ->
+    modkazoo_util:get_value(Field, doc(DocId, Context));
+doc_field(Field, DocId, Context) when is_list(Field) ->
+    modkazoo_util:get_value(z_convert:to_binary(Field), doc(DocId, Context)).
+

@@ -14,6 +14,12 @@
 m_find_value({crossbar_listing, [{year, Year},{month, Month}]}, _M, Context) ->
     onbill_util:crossbar_listing(Year, Month, Context);
 
+m_find_value({onbill_get_doc, [{doc_id, DocId}]}, _M, Context) ->
+    onbill_util:doc(DocId, Context);
+
+m_find_value({doc_field,[{doc_id, DocId},{field, Field}]}, _M, Context) ->
+    onbill_util:doc_field(Field, DocId, Context);
+
 m_find_value({crossbar_listing, [{account_id, 'undefined'}, {year, Year},{month, Month}]}, _M, Context) ->
     onbill_util:crossbar_listing(Year, Month, Context);
 
