@@ -20,20 +20,12 @@
   </span>
 </div>
 <div class="pl-10 pr-10 col-md-6">
-  {% wire action={connect signal={update_onbill_resources_tpl}
-                          action={update target="onbill_resources_tpl" template="onbill_resources.tpl" headline=_"Outbound routing"}} %}
-  <span id="onbill_resources_tpl">
-        {% include "onbill_resources.tpl" headline=_"Outbound routing" %}
-  </span>
 
-  {% wire action={connect signal={update_rs_allocated_numbers_tpl} action={update target="rs_allocated_numbers_tpl"
-                                                                                  template="rs_allocated_numbers.tpl"
-                                                                                  headline=_"Account's allocated numbers"
-                                                                                  account_id=account_id}}
-  %}
+  {% for carrier_id in m.onbill[{onbill_get_doc doc_id="onbill_reseller_variables" }][1]["carriers"] %}
+    {% include "onbill_carrier.tpl" carrier_id=carrier_id headline=_"Carrier"++" "++carrier_id %}
+  {% endfor %}
+
 </div>
-
-{% print m.onbill[{onbill_get_doc doc_id="onbill_global_variables"}] %}
 
 {% endblock %}
 

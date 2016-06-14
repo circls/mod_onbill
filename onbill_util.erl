@@ -3,11 +3,12 @@
 
 -export([crossbar_listing/3
          ,crossbar_listing/4
-         ,onbill_attachment/6
+         ,onbill_modb_attachment/6
          ,onbill_attachment_link/5
          ,onbill_attachment_link/6
          ,onbill_attachment_link/7
          ,generate_monthly_docs/5
+         ,carrier/2
          ,doc/2
          ,doc_field/3
 ]).
@@ -23,6 +24,8 @@
 -define(INVOICE, <<"/invoice">>).
 -define(ATTACHMENT, <<"/attachment">>).
 -define(GENERATE, <<"/generate">>).
+-define(MODB, <<"/onbills_modb">>).
+-define(CARRIERS, <<"/carriers">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
@@ -46,16 +49,25 @@ crossbar_listing(AccountId, Year, Month, Context) ->
 
 doc(DocId, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
-    onbill_get_doc(AccountId, DocId, Context).
+    doc(AccountId, DocId, Context).
 
-onbill_get_doc(AccountId, DocId, Context) ->
+doc(AccountId, DocId, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,"/",(z_convert:to_binary(DocId))/binary>>,
     kazoo_util:crossbar_account_request('get', API_String, [], Context).
 
-onbill_attachment(AccountId, DocId, AuthToken, Year, Month, Context) ->
+carrier(CarrierId, Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    carrier(AccountId, CarrierId, Context).
+
+carrier(AccountId, CarrierId, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
-                   ,?ONBILLS/binary,"/",(z_convert:to_binary(DocId))/binary, ?ATTACHMENT/binary
+                   ,?ONBILLS/binary,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary>>,
+    kazoo_util:crossbar_account_request('get', API_String, [], Context).
+
+onbill_modb_attachment(AccountId, DocId, AuthToken, Year, Month, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
+                   ,?ONBILLS/binary,?MODB/binary,"/",(z_convert:to_binary(DocId))/binary, ?ATTACHMENT/binary
                    ,"?year=",(z_convert:to_binary(Year))/binary,"&month=",(z_convert:to_binary(Month))/binary>>,
     kazoo_util:crossbar_account_send_raw_request_body(AuthToken, 'get', API_String, [], [], Context).
 
