@@ -14,10 +14,10 @@
                                    class="arrowpad fa fa-arrow-circle-down"></i>
   </span>
     {{ headline }}
-    {% button class="btn btn-xs btn-onnet pull-right" text=_"save" id="save_json_onbill_carrier"
-              action={ dialog_open title=_"Account level call restrictions" template="admin_portal_account_restrictions.tpl" class="iamclass" } %}
-    {% button class="btn btn-xs btn-onnet pull-right" text=_"restore" id="restore_json_onbill_carrier"
-              action={ dialog_open title=_"Web access restrictions setup" template="_add_webaccess_list.tpl" } %}
+    {% button class="btn btn-xs btn-onnet pull-right" text=_"save" id="save_json_"++carrier_id
+              action={postback postback={onbill_set_doc_json doc_id=carrier_id} qarg="json_storage_"++carrier_id delegate="mod_onbill" } %}
+    {% button class="btn btn-xs btn-onnet pull-right" text=_"restore" id="restore_json_"++carrier_id %}
+
 {% endblock %}
 
 {% block widget_class %}{% if last %}last{% endif %}{% endblock %}

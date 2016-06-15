@@ -54,8 +54,25 @@ event({postback,{refresh_rs_related_documents,[{account_id,AccountId}]},_,_}, Co
                    ),
     Context;
 
+event({postback,{onbill_set_doc_json,[{doc_id, "onbill_reseller_variables" = DocId}]},_,_}, Context) ->
+    JsString = z_context:get_q("json_storage_"++z_convert:to_list("onbill_reseller_variables"), Context),
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
+    growl_bad_result(onbill_util:doc(post, AccountId, DocId, DataBag, Context), Context);
+event({postback,{onbill_set_doc_json,[{doc_id,DocId}]},_,_}, Context) ->
+    JsString = z_context:get_q("json_storage_"++z_convert:to_list(DocId), Context),
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
+    growl_bad_result(onbill_util:carrier(post, AccountId, DocId, DataBag, Context), Context);
+
 event(A, Context) ->
     lager:info("Unknown event A: ~p", [A]),
     lager:info("Unknown event variables: ~p", [z_context:get_q_all(Context)]),
     lager:info("Unknown event Context: ~p", [Context]),
     Context.
+
+growl_bad_result(<<>>, Context) -> 
+    z_render:growl_error(?__("Something went wrong.", Context), Context);
+growl_bad_result(_, Context) -> 
+    z_render:growl(?__("Operation succeeded.",Context), Context).
+

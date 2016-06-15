@@ -9,7 +9,9 @@
          ,onbill_attachment_link/7
          ,generate_monthly_docs/5
          ,carrier/2
+         ,carrier/5
          ,doc/2
+         ,doc/5
          ,doc_field/3
 ]).
 
@@ -49,21 +51,21 @@ crossbar_listing(AccountId, Year, Month, Context) ->
 
 doc(DocId, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
-    doc(AccountId, DocId, Context).
+    doc('get', AccountId, DocId, [], Context).
 
-doc(AccountId, DocId, Context) ->
+doc(Verb, AccountId, DocId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,"/",(z_convert:to_binary(DocId))/binary>>,
-    kazoo_util:crossbar_account_request('get', API_String, [], Context).
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 carrier(CarrierId, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
-    carrier(AccountId, CarrierId, Context).
+    carrier('get', AccountId, CarrierId, [], Context).
 
-carrier(AccountId, CarrierId, Context) ->
+carrier(Verb, AccountId, CarrierId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary>>,
-    kazoo_util:crossbar_account_request('get', API_String, [], Context).
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 onbill_modb_attachment(AccountId, DocId, AuthToken, Year, Month, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
