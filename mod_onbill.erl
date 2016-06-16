@@ -65,6 +65,14 @@ event({postback,{onbill_set_doc_json,[{doc_id,DocId}]},_,_}, Context) ->
     DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
     growl_bad_result(onbill_util:carrier(post, AccountId, DocId, DataBag, Context), Context);
 
+event({submit,edit_carrier_template,_,_}, Context) ->
+    AccountId = z_context:get_session(kazoo_account_id, Context),
+    CarrierId = z_context:get_q("carrier_id", Context),
+    TemplateId = z_context:get_q("template_id", Context),
+    MessageBody = z_context:get_q("html_body", Context),
+    _ = onbill_util:carrier_template('post', AccountId, CarrierId, TemplateId, MessageBody, Context),
+    z_render:dialog_close(Context);
+
 event(A, Context) ->
     lager:info("Unknown event A: ~p", [A]),
     lager:info("Unknown event variables: ~p", [z_context:get_q_all(Context)]),

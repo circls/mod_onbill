@@ -10,6 +10,7 @@
          ,generate_monthly_docs/5
          ,carrier/2
          ,carrier/5
+         ,carrier_template/7
          ,doc/2
          ,doc/5
          ,doc_field/3
@@ -66,6 +67,19 @@ carrier(Verb, AccountId, CarrierId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
+
+carrier_template(Verb, Headers, AccountId, CarrierId, TemplateId, MessageBody, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary,?ONBILLS/binary
+                  ,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary,"/",(z_convert:to_binary(TemplateId))/binary>>,
+    kazoo_util:crossbar_account_send_raw_request_body(Verb, API_String, Headers, MessageBody, Context).
+
+
+
+%kz_save_notification_template(ContextType, NotificationId, AccountId, MessageBody, Context) ->
+%    API_String = <<?V2/binary, ?ACCOUNTS/binary, AccountId/binary, ?NOTIFICATIONS/binary, <<"/">>/binary, (z_convert:to_binary(NotificationId))/binary>>,
+%    crossbar_account_send_request('post', API_String, ContextType, MessageBody, Context).
+
+
 
 onbill_modb_attachment(AccountId, DocId, AuthToken, Year, Month, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary

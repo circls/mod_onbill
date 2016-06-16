@@ -41,6 +41,10 @@ m_find_value({attachment_download_link, [{account_id, 'undefined'}, {doc_id, Doc
 m_find_value({attachment_download_link, [{account_id, AccountId}, {doc_id, DocId},{year, Year},{month, Month}]}, _M, Context) ->
     onbill_util:onbill_attachment_link(AccountId, DocId, "onbill_modb", Year, Month, Context);
 
+m_find_value({carrier_template,[{carrier_id,CarrierId},{template_id,TemplateId}]}, _M, Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    onbill_util:carrier_template('get', [], AccountId, CarrierId, TemplateId, [], Context);
+
 m_find_value(_V, _VV, _Context) ->
     lager:info("m_find_value _V: ~p", [_V]),
     lager:info("m_find_value _VV: ~p", [_VV]),
