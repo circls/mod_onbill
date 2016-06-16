@@ -70,7 +70,7 @@ event({submit,edit_carrier_template,_,_}, Context) ->
     CarrierId = z_context:get_q("carrier_id", Context),
     TemplateId = z_context:get_q("template_id", Context),
     MessageBody = z_context:get_q("html_body", Context),
-    _ = onbill_util:carrier_template('post', AccountId, CarrierId, TemplateId, MessageBody, Context),
+    _ = onbill_util:carrier_template('post', [{"Content-Type", "text/html;charset=utf-8"}], AccountId, CarrierId, TemplateId, MessageBody, Context),
     z_render:dialog_close(Context);
 
 event(A, Context) ->

@@ -24,9 +24,28 @@
         <span class="caret"></span>
       </a>
       <ul class="dropdown-menu nav-list nav">
-          {% wire name="carrier_template_edit_event" action={dialog_open title=_"Edit html template" template="_edit_carrier_template.tpl" carrier_id=carrier_id} %}
-          <li><a href="#" onclick="z_event('carrier_template_edit_event', { template_id: 'invoice' });">{_ invoice _}</li></a>
-          <li><a href="#" onclick="z_event('carrier_template_edit_event', { template_id: 'act' });">{_ act _}</li></a>
+       {% wire name="carrier_template_edit_event" action={dialog_open title=_"Edit html template" template="_edit_carrier_template.tpl" width="auto"} %}
+       {% with m.onbill[{onbill_get_carrier carrier_id=carrier_id }][1] as carrier_doc %}
+        {% for document in carrier_doc["documents"] %}
+          <li>
+            <a href="#" onclick="z_event('carrier_template_edit_event', { template_id: '{{ document }}', carrier_id: '{{ carrier_id }}' });">
+                {{ carrier_id }}_{{ document }}
+            </a>
+          </li>
+        {% endfor %}
+        {% if carrier_doc["carrier_type"] == "main" %}
+          <li>
+            <a href="#" onclick="z_event('carrier_template_edit_event', { template_id: 'aggregated_invoice', carrier_id: '{{ carrier_id }}' });">
+                {{ carrier_id }}_aggregated_invoice
+            </a>
+          </li>
+        {% endif %}
+       {% endwith %}
+        <li>
+          <a href="#" onclick="z_event('carrier_template_edit_event', { template_id: 'calls_report', carrier_id: '{{ carrier_id }}' });">
+            {{ carrier_id }}_calls_report
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -46,5 +65,4 @@
         %}
     </div>
 </div>
-
 {% endblock %}
