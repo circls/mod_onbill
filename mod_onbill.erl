@@ -6,12 +6,20 @@
 -mod_prio(13).
 
 -export([
-    event/2
+    observe_topmenu_element/2
+    ,event/2
 ]).
 
 
 -include_lib("zotonic.hrl").
 -include_lib("include/mod_onbill.hrl").
+
+observe_topmenu_element(A, Context) ->
+    lager:info("Catched onbill topmenu_element: ~p", [A]),
+    case modkazoo_auth:is_auth(Context) of
+        'false' -> 'undefined';
+        'true' -> <<"_onbill_topmenu.tpl">>
+    end.
 
 event({postback,refresh_onbill_docs,_,_}, Context) ->
     DocsMonthInput = z_context:get_q("docsmonthInput",Context),
