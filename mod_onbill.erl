@@ -14,8 +14,7 @@
 -include_lib("zotonic.hrl").
 -include_lib("include/mod_onbill.hrl").
 
-observe_topmenu_element(A, Context) ->
-    lager:info("Catched onbill topmenu_element: ~p", [A]),
+observe_topmenu_element(_, Context) ->
     case modkazoo_auth:is_auth(Context) of
         'false' -> 'undefined';
         'true' -> <<"_onbill_topmenu.tpl">>
