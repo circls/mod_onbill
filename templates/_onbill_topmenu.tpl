@@ -3,8 +3,9 @@
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{_ Billing _} <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="/billing_operations">{_ Billing Operations _}</a>
-              <li><a href="/billing_settings">{_ Billing Settings _}</a>
+              <li><a href="/billing_operations">{_ Operations _}</a>
+              <li><a href="/billing_settings">{_ Settings _}</a>
+              <li><a href="/billing_transactions">{_ Transactions _}</a>
             </ul>
          </li>
        </ul>
