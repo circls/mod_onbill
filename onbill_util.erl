@@ -8,6 +8,8 @@
          ,onbill_attachment_link/6
          ,onbill_attachment_link/7
          ,generate_monthly_docs/5
+         ,customer/2
+         ,customer/5
          ,carrier/2
          ,carrier/5
          ,carrier_template/7
@@ -28,6 +30,7 @@
 -define(ATTACHMENT, <<"/attachment">>).
 -define(GENERATE, <<"/generate">>).
 -define(MODB, <<"/onbills_modb">>).
+-define(CUSTOMERS, <<"/customers">>).
 -define(CARRIERS, <<"/carriers">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
@@ -57,6 +60,15 @@ doc(DocId, Context) ->
 doc(Verb, AccountId, DocId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,"/",(z_convert:to_binary(DocId))/binary>>,
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
+
+customer(CustomerId, Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    customer('get', AccountId, CustomerId, [], Context).
+
+customer(Verb, AccountId, CustomerId, DataBag, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
+                   ,?ONBILLS/binary,?CUSTOMERS/binary,"/",(z_convert:to_binary(CustomerId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 carrier(CarrierId, Context) ->

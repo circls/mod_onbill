@@ -15,7 +15,11 @@
   </span>
     {{ headline }}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"save" id="save_json_onbill_reseller_variables"
-              action={postback postback={onbill_set_doc_json doc_id="onbill_reseller_variables"} qarg="json_storage_onbill_reseller_variables" delegate="mod_onbill" } %}
+              action={postback postback={onbill_set_doc_json doc_id="onbill_reseller_variables" doc_type="who_cares"}
+                               qarg="json_storage_onbill_reseller_variables"
+                               delegate="mod_onbill"
+                     }
+    %}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"restore" id="restore_json_onbill_reseller_variables" %}
 {% endblock %}
 
