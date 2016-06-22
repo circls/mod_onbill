@@ -1,7 +1,7 @@
 {% extends "dashboard_base.tpl" %}
 
 {% block header_title %}
-  {% include "_account_page_title.tpl" title=_"Billing settings" %}
+  {% include "_account_page_title.tpl" title=_"General settings" %}
 {% endblock %}
 
 {% block service_description %}

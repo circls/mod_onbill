@@ -4,8 +4,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{_ Billing _} <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="/billing_operations">{_ Operations _}</a>
-              <li><a href="/billing_settings">{_ Settings _}</a>
-              <li><a href="/billing_transactions">{_ Transactions _}</a>
+              <li><a href="/account_transactions">{_ Account transactions _}</a>
+              <li><a href="/general_settings">{_ General settings _}</a>
+	      <li><a href="/account_settings">{_ Account settings _}</a>
             </ul>
          </li>
        </ul>
