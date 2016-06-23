@@ -14,7 +14,9 @@
                                    class="arrowpad fa fa-arrow-circle-down"></i>
   </span>
     {{ headline }}
-    {% button class="btn btn-xs btn-onnet pull-right" text=_"create" id="add_json_service_plan" %}
+    {% button class="btn btn-xs btn-onnet pull-right" text=_"create" id="add_json_service_plan"
+              action={dialog_open title=_"Create new service plan." template="_create_new_service_plan.tpl"}
+     %}
     <span id="service_plan_buttons"></span>
     <div class="btn-group pull-right" style="margin-left: 3px;">
       <a class="btn btn-xs btn-onnet dropdown-toggle" data-toggle="dropdown" href="#">

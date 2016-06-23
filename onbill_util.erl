@@ -34,7 +34,7 @@
 -define(MODB, <<"/onbills_modb">>).
 -define(CUSTOMERS, <<"/customers">>).
 -define(CARRIERS, <<"/carriers">>).
--define(SERVICE_PLANS, <<"/service_plans">>).
+-define(SERVICE_PLANS, <<"/onbill_service_plans">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
