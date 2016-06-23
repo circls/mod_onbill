@@ -15,7 +15,11 @@
   </span>
     {{ headline }}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"save" id="save_json_"++customer_id
-              action={postback postback={onbill_set_doc_json doc_id=customer_id doc_type="customer"} qarg="json_storage_"++customer_id delegate="mod_onbill" } %}
+              action={postback postback={onbill_set_doc_json doc_id=customer_id doc_type="customer"}
+                               qarg="json_storage_"++customer_id
+                               delegate="mod_onbill"
+                     }
+     %}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"restore" id="restore_json_"++customer_id %}
 
 {% endblock %}

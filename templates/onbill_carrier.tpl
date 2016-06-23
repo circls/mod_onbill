@@ -15,7 +15,11 @@
   </span>
     {{ headline }}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"save" id="save_json_"++carrier_id
-              action={postback postback={onbill_set_doc_json doc_id=carrier_id doc_type="carrier"} qarg="json_storage_"++carrier_id delegate="mod_onbill" } %}
+              action={postback postback={onbill_set_doc_json doc_id=carrier_id doc_type="carrier"}
+                               qarg="json_storage_"++carrier_id
+                               delegate="mod_onbill"
+                     }
+     %}
     {% button class="btn btn-xs btn-onnet pull-right" text=_"restore" id="restore_json_"++carrier_id %}
     <div class="btn-group pull-right" style="margin-left: 3px;">
       <a class="btn btn-xs btn-onnet dropdown-toggle" data-toggle="dropdown" href="#">

@@ -10,6 +10,8 @@
          ,generate_monthly_docs/5
          ,customer/2
          ,customer/5
+         ,service_plan/2
+         ,service_plan/5
          ,carrier/2
          ,carrier/5
          ,carrier_template/7
@@ -32,6 +34,7 @@
 -define(MODB, <<"/onbills_modb">>).
 -define(CUSTOMERS, <<"/customers">>).
 -define(CARRIERS, <<"/carriers">>).
+-define(SERVICE_PLANS, <<"/service_plans">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
@@ -69,6 +72,15 @@ customer(CustomerId, Context) ->
 customer(Verb, AccountId, CustomerId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,?CUSTOMERS/binary,"/",(z_convert:to_binary(CustomerId))/binary>>,
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
+
+service_plan(ServicePlanId, Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    service_plan('get', AccountId, ServicePlanId, [], Context).
+
+service_plan(Verb, AccountId, ServicePlanId, DataBag, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
+                   ,?ONBILLS/binary,?SERVICE_PLANS/binary,"/",(z_convert:to_binary(ServicePlanId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 carrier(CarrierId, Context) ->

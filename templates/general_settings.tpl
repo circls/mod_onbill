@@ -7,17 +7,9 @@
 {% block service_description %}
 
 <div class="pl-10 pr-10 col-md-6">
-  {% wire action={connect signal={update_onbill_general_settings_tpl}
-                          action={update target="onbill_general_settings_tpl" template="onbill_general_settings.tpl" headline=_"General settings"}} %}
-  <span id="onbill_general_settings_tpl">
         {% include "onbill_general_settings.tpl" headline=_"General settings" %}
-  </span>
 
-  {% wire action={connect signal={update_onbill_notifications_tpl}
-                          action={update target="onbill_notifications_tpl" template="onbill_notifications.tpl" headline=_"Templates"}} %}
-  <span id="onbill_notifications_tpl">
-        {% include "onbill_notifications.tpl" headline=_"Notifications" %}
-  </span>
+        {% include "onbill_service_plans.tpl" headline=_"Service plans" %}
 </div>
 <div class="pl-10 pr-10 col-md-6">
 
