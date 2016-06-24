@@ -8,9 +8,9 @@
         action={ postback postback={trigger_innoui_widget arg="onbill_service_plan_widget_opened" } delegate="mod_kazoo" }
 %}
   <span id="arrows_{{ #dtid }}" style="cursor: pointer;">
-    <i id="arrow_right_{{ #dtid }}" style="display: none;"
+    <i id="arrow_right_{{ #dtid }}" style="{% if m.kazoo[{ui_element_opened element="onbill_service_plan_widget_opened"}] %}display: none;{% endif %}"
                                     class="arrowpad fa fa-arrow-circle-right"></i>
-    <i id="arrow_down_{{ #dtid }}" style="display: none;"
+    <i id="arrow_down_{{ #dtid }}" style="{% if not m.kazoo[{ui_element_opened element="onbill_service_plan_widget_opened"}] %}display: none;{% endif %}"
                                    class="arrowpad fa fa-arrow-circle-down"></i>
   </span>
     {{ headline }}
@@ -31,6 +31,9 @@
                                               action={update target="service_plan_buttons"
                                                              template="onbill_service_plans_buttons.tpl"
                                                      }   
+                                              action={ show target="onbill_service_plan_widget_opened" }
+                                              action={ hide target="arrow_right_"++#dtid }
+                                              action={ show target="arrow_down_"++#dtid }
        %}
         {% for service_plan_available in m.kazoo.kz_service_plans_available %}
           <li>
@@ -48,6 +51,6 @@
 
 {% block widget_content %}
             
-<div id="onbill_service_plan_widget_opened" style="display: none1;">
+<div id="onbill_service_plan_widget_opened" style="{% if not m.kazoo[{ui_element_opened element="onbill_service_plan_widget_opened"}] %}display: none;{% endif %}">
 </div>
 {% endblock %}
