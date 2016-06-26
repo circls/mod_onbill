@@ -142,8 +142,9 @@ onbill_attachment_link(AccountId, DocId, AuthToken, DocType, Year, Month, Contex
                  >>,
     <<"https://", (z_convert:to_binary(z_dispatcher:hostname(Context)))/binary, API_String/binary>>.
 
-generate_monthly_docs(DocType, AccountId, Year, Month, Context) ->
-    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary, ?GENERATE/binary>>,
+generate_monthly_docs(DocType, DocsAccountId, Year, Month, Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary, ?GENERATE/binary, "/", (z_convert:to_binary(DocsAccountId))/binary>>,
     DataBag = ?MK_DATABAG({[{<<"year">>, Year},{<<"month">>, Month},{<<"doc_type">>, DocType}]}),
     kazoo_util:crossbar_account_request('put', API_String, DataBag, Context).
 

@@ -52,6 +52,12 @@ event({postback,{generate_rs_related_documents,[{account_id,AccountId}, {doc_typ
                    ),
     Context;
 
+event({postback,generate_children_docs,_,_}, Context) ->
+    MonthChosen = z_context:get_q("docs_month_chosen",Context),
+    [Month,Year] = z_string:split(MonthChosen,"/"),
+    _ = onbill_util:generate_monthly_docs('who_cares', <<"all_children">>, Year, Month, Context),
+    z_render:growl(?__("Process started and could take a while.",Context), Context);
+
 event({postback,{refresh_rs_related_documents,[{account_id,AccountId}]},_,_}, Context) ->
     MonthChosen = z_context:get_q("related_documents_month_chosen",Context),
     [Month,Year] = z_string:split(MonthChosen,"/"),
