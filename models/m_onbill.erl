@@ -60,6 +60,12 @@ m_find_value({carrier_template,[{carrier_id,CarrierId},{template_id,TemplateId}]
     AccountId = z_context:get_session('kazoo_account_id', Context),
     onbill_util:carrier_template('get', [], AccountId, CarrierId, TemplateId, [], Context);
 
+m_find_value({periodic_fees, [{account_id, AccountId}]}, _M, Context) ->
+    onbill_util:periodic_fees('get', AccountId, [], Context);
+
+m_find_value({periodic_fees, [{account_id, AccountId},{fee_id, FeeId}]}, _M, Context) ->
+    onbill_util:periodic_fees('get', AccountId, FeeId, [], Context);
+
 m_find_value(_V, _VV, _Context) ->
     lager:info("m_find_value _V: ~p", [_V]),
     lager:info("m_find_value _VV: ~p", [_VV]),

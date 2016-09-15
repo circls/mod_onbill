@@ -18,6 +18,8 @@
          ,doc/2
          ,doc/5
          ,doc_field/3
+         ,periodic_fees/4
+         ,periodic_fees/5
 ]).
 
 -include_lib("zotonic.hrl").
@@ -35,6 +37,7 @@
 -define(CUSTOMERS, <<"/customers">>).
 -define(CARRIERS, <<"/carriers">>).
 -define(SERVICE_PLANS, <<"/onbill_service_plans">>).
+-define(PERIODIC_FEES, <<"/periodic_fees">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
@@ -156,4 +159,13 @@ doc_field(Field, DocId, Context) when is_binary(hd(Field)) ->
     modkazoo_util:get_value(Field, doc(DocId, Context));
 doc_field(Field, DocId, Context) when is_list(Field) ->
     modkazoo_util:get_value(z_convert:to_binary(Field), doc(DocId, Context)).
+
+periodic_fees(Verb, AccountId, DataBag, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary,?PERIODIC_FEES/binary>>,
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
+
+periodic_fees(Verb, AccountId, FeeId, DataBag, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
+                   ,?ONBILLS/binary,?PERIODIC_FEES/binary,"/",(z_convert:to_binary(FeeId))/binary>>,
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 

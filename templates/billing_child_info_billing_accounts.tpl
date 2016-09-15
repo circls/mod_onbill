@@ -1,5 +1,6 @@
 <div class="pl-10 pr-10 col-md-6">
   {% include "onbill_account_details.tpl" customer_id=account_id headline=_"Account details" %}
+  {% include "onbill_periodic_services.tpl" headline=_"Periodic services" customer_id=account_id %}
   {% include "onbill_customer.tpl" customer_id=account_id headline=_"Edit customer data" %}
 </div>
 <div class="pl-10 pr-10 col-md-6">

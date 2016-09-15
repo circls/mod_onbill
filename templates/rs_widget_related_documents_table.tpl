@@ -1,5 +1,5 @@
 <table id="rs_related_documents_table" class="table display table-striped table-condensed">
-   <thead>
+  <thead>
         <tr>
             <th>{_ Type _}</th>
             <th class="td-center">{_ Counterparty _}</th>
@@ -8,19 +8,24 @@
             <th class="td-center">{_ VAT _}</th>
             <th class="td-center">{_ Total _}</th>
         </tr>
-    </thead>
-    <tbody>
-      {% for doc in m.onbill[{crossbar_listing account_id=account_id year=year month=month}] %}
-        <tr>
-            <td><a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["type"] }}</a></td>
-            <td><a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["oper_name_short"] }}</a></td>
-            <td>{{ doc["doc_date"] }}</td>
-            <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_netto"] }}</td>
-            <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_vat"] }}</td>
-            <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_brutto"] }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
+  </thead>
+  <tbody>
+    {% for doc in m.onbill[{crossbar_listing account_id=account_id year=year month=month}] %}
+    <tr>
+      <td>
+        <a target="_blank" href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["type"] }}</a>
+      </td>
+      <td>
+        <a target="_blank"
+           href="{{ m.onbill[{attachment_download_link account_id=account_id doc_id=doc["id"] year=year month=month}] }}">{{ doc["oper_name_short"]|truncate:15 }}</a>
+      </td>
+      <td>{{ doc["doc_date"] }}</td>
+      <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_netto"] }}</td>
+      <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_vat"] }}</td>
+      <td class="td-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ doc["total_brutto"] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
 {% javascript %}
