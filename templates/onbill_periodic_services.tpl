@@ -14,8 +14,18 @@
                                    class="arrowpad fa fa-arrow-circle-down"></i>
   </span>
     {{ headline }}
+    {% button id="add_service_btn"
+              class="btn btn-xs btn-onnet pull-right"
+              text=_"add service"
+              action={dialog_open title=_"Add periodic service"
+                                  template="_periodic_service.tpl"
+                                  account_id=account_id
+                     }
+    %}
     <i id="show_legs_toggler" class="fa fa-toggle-{% if m.session.show_cdr_legs %}on{% else %}off{% endif %} pointer pull-right" style="margin: 0.1em 1em 0 0"></i>
     <span class="pull-right pr-05"> {_ Active only _}: </span>
+
+
 
 {% endblock %}
 

@@ -16,13 +16,17 @@
         {{ fee["service_starts"]|inno_timestamp_to_date }} {{ fee["service_starts"]|inno_timestamp_to_date:"show_tz_name" }}
       </td>
       <td class="td-center">
-        {{ fee["service_ends"]|inno_timestamp_to_date }} {{ fee["service_ends"]|inno_timestamp_to_date:"show_tz_name" }}
+        {% if fee["service_ends"] %}
+          {{ fee["service_ends"]|inno_timestamp_to_date }} {{ fee["service_ends"]|inno_timestamp_to_date:"show_tz_name" }}
+        {% else %}
+          Neverending Dream...
+        {% endif %}
       </td>
       <td class="td-center">
         <i id="info_{{ fee["id"] }}" class="fa fa-info-circle zprimary pointer" title="Details"></i>
       </td>
       {% wire id="info_"++fee["id"]
-              action={dialog_open title=_"Manage periodic service"
+              action={dialog_open title=_"Manage periodic service" ++ " " ++ fee["service_id"]
                                   template="_periodic_service.tpl"
                                   account_id=account_id
                                   fee_id=fee["id"]
