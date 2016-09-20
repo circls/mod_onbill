@@ -66,6 +66,9 @@ m_find_value({periodic_fees, [{account_id, AccountId}]}, _M, Context) ->
 m_find_value({periodic_fees, [{account_id, AccountId},{fee_id, FeeId}]}, _M, Context) ->
     onbill_util:periodic_fees('get', AccountId, FeeId, [], Context);
 
+m_find_value({transaction, [{account_id, AccountId},{transaction_id, TransactionId}]}, _M, Context) ->
+    onbill_util:onbill_transaction(TransactionId, AccountId, Context);
+
 m_find_value(_V, _VV, _Context) ->
     lager:info("m_find_value _V: ~p", [_V]),
     lager:info("m_find_value _VV: ~p", [_VV]),

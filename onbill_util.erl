@@ -20,11 +20,12 @@
          ,doc_field/3
          ,periodic_fees/4
          ,periodic_fees/5
+         ,onbill_transaction/3
 ]).
 
 -include_lib("zotonic.hrl").
+-include_lib("include/mod_onbill.hrl").
 
--define(MK_DATABAG(JObj), {[{<<"data">>, JObj}]}).
 
 -define(V1, <<"/v1">>).
 -define(V2, <<"/v2">>).
@@ -38,6 +39,7 @@
 -define(CARRIERS, <<"/carriers">>).
 -define(SERVICE_PLANS, <<"/onbill_service_plans">>).
 -define(PERIODIC_FEES, <<"/periodic_fees">>).
+-define(ONBILL_TRANSACTIONS, <<"/onbill_transactions">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
@@ -161,11 +163,18 @@ doc_field(Field, DocId, Context) when is_list(Field) ->
     modkazoo_util:get_value(z_convert:to_binary(Field), doc(DocId, Context)).
 
 periodic_fees(Verb, AccountId, DataBag, Context) ->
-    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?ONBILLS/binary,?PERIODIC_FEES/binary>>,
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary, ?PERIODIC_FEES/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
+periodic_fees(Verb, AccountId, 'undefined', DataBag, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary ,?PERIODIC_FEES/binary>>,
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context);
 periodic_fees(Verb, AccountId, FeeId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
-                   ,?ONBILLS/binary,?PERIODIC_FEES/binary,"/",(z_convert:to_binary(FeeId))/binary>>,
+                   ,?PERIODIC_FEES/binary,"/",(z_convert:to_binary(FeeId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
+
+onbill_transaction(TransactionId, AccountId, Context) ->
+    API_String = <<?V1/binary, ?ACCOUNTS/binary, ?TO_BIN(AccountId)/binary, ?ONBILL_TRANSACTIONS/binary, "/", ?TO_BIN(TransactionId)/binary>>,
+    kazoo_util:crossbar_account_request('get', API_String, [], Context).
 

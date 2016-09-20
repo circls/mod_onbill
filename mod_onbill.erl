@@ -86,6 +86,32 @@ event({submit,edit_carrier_template,_,_}, Context) ->
     _ = onbill_util:carrier_template('post', [{"Content-Type", "text/html;charset=utf-8"}], AccountId, CarrierId, TemplateId, MessageBody, Context),
     z_render:dialog_close(Context);
 
+event({submit,periodic_fee,_,_}, Context) ->
+    AccountId = ?TO_BIN(z_context:get_q("account_id", Context)),
+    FeeId = case ?TO_BIN(z_context:get_q("fee_id", Context)) of
+                      <<>> -> 'undefined';
+                      FeeBin -> FeeBin
+                  end,
+    ServiceEnds = case ?TO_BIN(z_context:get_q("enddate_defined", Context)) of
+                      <<>> -> 'undefined';
+                      _ -> modkazoo_util:datepick_to_tstamp(z_context:get_q("service_ends", Context))
+                  end,
+    Props = [{<<"fee_id">>, FeeId}
+            ,{<<"account_id">>, ?TO_BIN(z_context:get_q("account_id", Context))}
+            ,{<<"service_id">>, ?TO_BIN(z_context:get_q("service_id", Context))}
+            ,{<<"comment">>, ?TO_BIN(z_context:get_q("comment", Context))}
+            ,{<<"service_starts">>, modkazoo_util:datepick_to_tstamp(z_context:get_q("service_starts", Context))}
+            ,{<<"service_ends">>, ServiceEnds}
+            ],
+    DataBag = ?MK_DATABAG(modkazoo_util:set_values(modkazoo_util:filter_empty(Props), modkazoo_util:new())),
+    case FeeId of
+        'undefined' ->
+            onbill_util:periodic_fees('put', AccountId, FeeId, DataBag, Context);
+        _ ->
+            onbill_util:periodic_fees('post', AccountId, FeeId, DataBag, Context)
+    end,
+    z_render:dialog_close(Context);
+
 event(A, Context) ->
     lager:info("Unknown event A: ~p", [A]),
     lager:info("Unknown event variables: ~p", [z_context:get_q_all(Context)]),
