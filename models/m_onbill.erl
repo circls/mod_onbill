@@ -33,10 +33,10 @@ m_find_value({onbill_get_carrier_json, [{carrier_id, CarrierId}]}, _M, Context) 
     jiffy:encode(onbill_util:carrier(CarrierId, Context));
 
 m_find_value({onbill_get_service_plan,[{service_plan_id, ServicePlanId}]}, _M, Context) ->
-    onbill_util:service_plan(ServicePlanId, Context);
+    onbill_util:onbill_service_plan(ServicePlanId, Context);
 
 m_find_value({onbill_get_service_plan_json,[{service_plan_id, ServicePlanId}]}, _M, Context) ->
-    jiffy:encode(onbill_util:service_plan(ServicePlanId, Context));
+    jiffy:encode(onbill_util:onbill_service_plan(ServicePlanId, Context));
 
 m_find_value({doc_field,[{doc_id, DocId},{field, Field}]}, _M, Context) ->
     onbill_util:doc_field(Field, DocId, Context);

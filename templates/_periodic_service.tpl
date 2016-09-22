@@ -87,6 +87,8 @@
         <div class="col-sm-12">
           {% button class="col-xs-12 btn btn-zprimary margin-bottom-xs" text=_"Save service"
                     action={submit target="form_periodic_fee"}
+                    action={mask target="rs_periodic_services_table"}
+                    action={emit signal={update_onbill_periodic_services_lazy_tpl}}
           %}
         </div>
       </div>

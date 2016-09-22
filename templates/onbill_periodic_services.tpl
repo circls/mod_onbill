@@ -32,6 +32,10 @@
 {% block widget_class %}{% if last %}last{% endif %}{% endblock %}
 
 {% block widget_content %}
+{% wire action={connect signal={update_onbill_periodic_services_lazy_tpl}
+                action={update target="onbill_periodic_services_widget_opened" template="onbill_periodic_services_lazy.tpl" account_id=account_id headline=_"Periodic services"}
+               }
+%}
 <div id="onbill_periodic_services_widget_opened" style="{% if not m.kazoo[{ui_element_opened element="onbill_periodic_services_widget_opened"}] %}display: none;{% endif %}">
     <div class="text-center p-3">
         {% ilazy class="fa fa-spinner fa-spin fa-3x" action={update target="onbill_periodic_services_widget_opened"

@@ -10,8 +10,8 @@
          ,generate_monthly_docs/5
          ,customer/2
          ,customer/5
-         ,service_plan/2
-         ,service_plan/5
+         ,onbill_service_plan/2
+         ,onbill_service_plan/5
          ,carrier/2
          ,carrier/5
          ,carrier_template/7
@@ -79,11 +79,11 @@ customer(Verb, AccountId, CustomerId, DataBag, Context) ->
                    ,?ONBILLS/binary,?CUSTOMERS/binary,"/",(z_convert:to_binary(CustomerId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
-service_plan(ServicePlanId, Context) ->
+onbill_service_plan(ServicePlanId, Context) ->
     AccountId = z_context:get_session('kazoo_account_id', Context),
-    service_plan('get', AccountId, ServicePlanId, [], Context).
+    onbill_service_plan('get', AccountId, ServicePlanId, [], Context).
 
-service_plan(Verb, AccountId, ServicePlanId, DataBag, Context) ->
+onbill_service_plan(Verb, AccountId, ServicePlanId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                    ,?ONBILLS/binary,?SERVICE_PLANS/binary,"/",(z_convert:to_binary(ServicePlanId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
