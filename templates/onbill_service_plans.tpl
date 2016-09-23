@@ -21,7 +21,7 @@
     <div class="btn-group pull-right" style="margin-left: 3px;">
       <a class="btn btn-xs btn-onnet dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-calendar"></i>
-        {_ choose service plan to edit _}
+        {_ select _}
         <span class="caret"></span>
       </a>
       <ul class="dropdown-menu nav-list nav">
