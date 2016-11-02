@@ -72,6 +72,10 @@ event({postback,{onbill_set_doc_json,[{doc_id, "onbill_reseller_variables" = Doc
     AccountId = z_context:get_session('kazoo_account_id', Context),
     DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
     growl_bad_result(onbill_util:doc(post, AccountId, DocId, DataBag, Context), Context);
+event({postback,{onbill_set_doc_json,[{doc_id,DocId},{doc_type, "customer"}]},_,_}, Context) ->
+    JsString = z_context:get_q("json_storage_"++z_convert:to_list(DocId), Context),
+    DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
+    growl_bad_result(onbill_util:customer(post, DocId, DataBag, Context), Context);
 event({postback,{onbill_set_doc_json,[{doc_id,DocId},{doc_type, DocType}]},_,_}, Context) ->
     JsString = z_context:get_q("json_storage_"++z_convert:to_list(DocId), Context),
     AccountId = z_context:get_session('kazoo_account_id', Context),
