@@ -83,7 +83,7 @@ onbill_service_plan(ServicePlanId, Context) ->
 
 onbill_service_plan(Verb, AccountId, ServicePlanId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
-                   ,?ONBILLS/binary,?SERVICE_PLANS/binary,"/",(z_convert:to_binary(ServicePlanId))/binary>>,
+                   ,?SERVICE_PLANS/binary,"/",(z_convert:to_binary(ServicePlanId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 carrier(CarrierId, Context) ->
