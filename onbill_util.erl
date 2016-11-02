@@ -10,6 +10,8 @@
          ,generate_monthly_docs/5
          ,customer/2
          ,customer/4
+         ,reseller/2
+         ,reseller/4
          ,onbill_service_plan/2
          ,onbill_service_plan/5
          ,carrier/2
@@ -36,6 +38,7 @@
 -define(GENERATE, <<"/generate">>).
 -define(MODB, <<"/onbills_modb">>).
 -define(CUSTOMERS, <<"/onbill_customers">>).
+-define(RESELLERS, <<"/onbill_resellers">>).
 -define(CARRIERS, <<"/carriers">>).
 -define(SERVICE_PLANS, <<"/onbill_service_plans">>).
 -define(PERIODIC_FEES, <<"/periodic_fees">>).
@@ -75,6 +78,13 @@ customer(CustomerId, Context) ->
 
 customer(Verb, CustomerId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(CustomerId))/binary, ?CUSTOMERS/binary>>,
+    kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
+
+reseller(ResellerId, Context) ->
+    reseller('get', ResellerId, [], Context).
+
+reseller(Verb, ResellerId, DataBag, Context) ->
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(ResellerId))/binary, ?RESELLERS/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 onbill_service_plan(ServicePlanId, Context) ->
