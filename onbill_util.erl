@@ -23,6 +23,8 @@
          ,periodic_fees/4
          ,periodic_fees/5
          ,onbill_transaction/3
+         ,promised_payment/1
+         ,promised_payment/2
 ]).
 
 -include_lib("zotonic.hrl").
@@ -43,6 +45,7 @@
 -define(SERVICE_PLANS, <<"/onbill_service_plans">>).
 -define(PERIODIC_FEES, <<"/periodic_fees">>).
 -define(ONBILL_TRANSACTIONS, <<"/onbill_transactions">>).
+-define(PROMISED_PAYMENT, <<"/promised_payment">>).
 
 crossbar_listing('undefined', 'undefined', Context) ->
     Timezone = z_convert:to_list(kazoo_util:may_be_get_timezone(Context)),
@@ -184,5 +187,13 @@ periodic_fees(Verb, AccountId, FeeId, DataBag, Context) ->
 
 onbill_transaction(TransactionId, AccountId, Context) ->
     API_String = <<?V1/binary, ?ACCOUNTS/binary, ?TO_BIN(AccountId)/binary, ?ONBILL_TRANSACTIONS/binary, "/", ?TO_BIN(TransactionId)/binary>>,
+    kazoo_util:crossbar_account_request('get', API_String, [], Context).
+
+promised_payment(Context) ->
+    AccountId = z_context:get_session('kazoo_account_id', Context),
+    promised_payment(AccountId, Context).
+
+promised_payment(AccountId, Context) ->
+    API_String = <<?V1/binary, ?ACCOUNTS/binary, ?TO_BIN(AccountId)/binary, ?PROMISED_PAYMENT/binary>>,
     kazoo_util:crossbar_account_request('get', API_String, [], Context).
 

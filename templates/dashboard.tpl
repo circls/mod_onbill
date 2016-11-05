@@ -25,6 +25,15 @@
         %}
       </div>
   </span>
+  {% if m.lb.credit_able %}
+  {# Credit status #}
+  <div id="update_widget_dashboard_credit">
+    {% include "onnet_widget_dashboard_credit.tpl" headline=_"Credit" idname="useless_dashboard_credit_table" %}
+  </div>
+  {% endif %}
+
+{% print m.onbill.promised_payment %}
+
 </div>
 <div class="pl-10 pr-10 col-md-6">
   <span id="onnet_widget_monthly_fees_tpl">
