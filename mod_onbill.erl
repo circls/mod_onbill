@@ -116,6 +116,36 @@ event({submit,periodic_fee,_,_}, Context) ->
     end,
     z_render:dialog_close(Context);
 
+event({postback,disarm_credit,_,_}, Context) ->
+    AccountId = z_context:get_session(kazoo_account_id, Context),
+    DataBag = ?MK_DATABAG({[{<<"armed">>,false}]}),
+    PrPt = onbill_util:promised_payment('patch', AccountId, DataBag, Context),
+    z_render:update("update_widget_dashboard_credit"
+                   ,z_template:render("onbill_widget_dashboard_credit.tpl"
+                                     ,[{headline,"Credit"},{pr_pt, PrPt}]
+                                     ,Context)
+                   ,Context);
+
+event({submit,arm_credit,_,_}, Context) ->
+    AccountId = z_context:get_session(kazoo_account_id, Context),
+    Credit_amount = z_context:get_q("creditme",Context),
+    try z_convert:to_integer(Credit_amount) of
+        Amount ->
+            DataBag = ?MK_DATABAG({[{<<"armed">>, true}
+                                   ,{<<"amount">>, Amount}
+                                   ]}
+                                 ),
+            PrPt = onbill_util:promised_payment('patch', AccountId, DataBag, Context),
+            z_render:update("update_widget_dashboard_credit"
+                           ,z_template:render("onbill_widget_dashboard_credit.tpl"
+                                             ,[{headline,"Credit"},{pr_pt, PrPt}]
+                                             ,Context)
+                           ,Context)
+    catch
+        error:_ ->
+            z_render:growl_error(?__("Something went wrong.", Context), Context)
+    end;
+
 event(A, Context) ->
     lager:info("Unknown event A: ~p", [A]),
     lager:info("Unknown event variables: ~p", [z_context:get_q_all(Context)]),

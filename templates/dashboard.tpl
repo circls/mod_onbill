@@ -10,7 +10,7 @@
   <span id="onnet_widget_account_details_tpl">
      <div class="text-center p-3">
         {% ilazy class="fa fa-spinner fa-spin fa-3x" action={update target="onnet_widget_account_details_tpl" 
-                                                                    template="onnet_widget_account_details.tpl"
+                                                                    template="onbill_widget_account_details.tpl"
                                                                     dashboard
                                                                     headline=_"Account details"}
         %}
@@ -25,14 +25,14 @@
         %}
       </div>
   </span>
-  {% if m.lb.credit_able %}
   {# Credit status #}
   <div id="update_widget_dashboard_credit">
-    {% include "onnet_widget_dashboard_credit.tpl" headline=_"Credit" idname="useless_dashboard_credit_table" %}
+    {% with m.onbill.promised_payment as pr_pt %}
+      {% if pr_pt[1]["enabled"] %}
+        {% include "onbill_widget_dashboard_credit.tpl" headline=_"Credit" pr_pt=pr_pt %}
+      {% endif %}
+    {% endwith %}
   </div>
-  {% endif %}
-
-{% print m.onbill.promised_payment %}
 
 </div>
 <div class="pl-10 pr-10 col-md-6">
