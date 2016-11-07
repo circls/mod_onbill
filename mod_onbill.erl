@@ -76,10 +76,11 @@ event({postback,{onbill_set_doc_json,[{doc_id,DocId},{doc_type, "customer"}]},_,
     JsString = z_context:get_q("json_storage_"++z_convert:to_list(DocId), Context),
     DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
     growl_bad_result(onbill_util:customer(post, DocId, DataBag, Context), Context);
-event({postback,{onbill_set_doc_json,[{doc_id,DocId},{doc_type, DocType}]},_,_}, Context) ->
+event({postback,{onbill_set_doc_json,[{doc_id,DocId},{doc_type, DocType}]},AAA,_}, Context) ->
     JsString = z_context:get_q("json_storage_"++z_convert:to_list(DocId), Context),
     AccountId = z_context:get_session('kazoo_account_id', Context),
     DataBag = {[{<<"data">>, jiffy:decode(JsString)}]},
+lager:info("IAM AAA: ~p",[AAA]),
     growl_bad_result(onbill_util:(z_convert:to_atom(DocType))(post, AccountId, DocId, DataBag, Context), Context);
 
 event({submit,edit_carrier_template,_,_}, Context) ->

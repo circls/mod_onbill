@@ -41,7 +41,7 @@
 -define(MODB, <<"/onbills_modb">>).
 -define(CUSTOMERS, <<"/onbill_customers">>).
 -define(RESELLERS, <<"/onbill_resellers">>).
--define(CARRIERS, <<"/carriers">>).
+-define(CARRIERS, <<"/onbill_carriers">>).
 -define(SERVICE_PLANS, <<"/onbill_service_plans">>).
 -define(PERIODIC_FEES, <<"/periodic_fees">>).
 -define(ONBILL_TRANSACTIONS, <<"/onbill_transactions">>).
@@ -105,11 +105,11 @@ carrier(CarrierId, Context) ->
 
 carrier(Verb, AccountId, CarrierId, DataBag, Context) ->
     API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
-                   ,?ONBILLS/binary,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary>>,
+                  ,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary>>,
     kazoo_util:crossbar_account_request(Verb, API_String, DataBag, Context).
 
 carrier_template(Verb, Headers, AccountId, CarrierId, TemplateId, MessageBody, Context) ->
-    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary,?ONBILLS/binary
+    API_String = <<?V2/binary, ?ACCOUNTS/binary, (z_convert:to_binary(AccountId))/binary
                   ,?CARRIERS/binary,"/",(z_convert:to_binary(CarrierId))/binary,"/",(z_convert:to_binary(TemplateId))/binary>>,
     kazoo_util:crossbar_account_send_raw_request_body(Verb, API_String, Headers, MessageBody, Context).
 

@@ -26,6 +26,9 @@ m_find_value({onbill_get_customer, [{customer_id, CustomerId}]}, _M, Context) ->
 m_find_value({onbill_get_customer_json, [{customer_id, CustomerId}]}, _M, Context) ->
     jiffy:encode(onbill_util:customer(CustomerId, Context));
 
+m_find_value({onbill_get_reseller, [{reseller_id, ResellerId}]}, _M, Context) ->
+    onbill_util:reseller(ResellerId, Context);
+
 m_find_value({onbill_get_reseller_json, [{reseller_id, ResellerId}]}, _M, Context) ->
     jiffy:encode(onbill_util:reseller(ResellerId, Context));
 
