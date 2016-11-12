@@ -30,7 +30,7 @@
       <ul class="dropdown-menu nav-list nav">
        {% wire name="carrier_template_edit_event" action={dialog_open title=_"Edit html template" template="_edit_carrier_template.tpl" width="auto"} %}
        {% with m.onbill[{onbill_get_carrier carrier_id=carrier_id }][1] as carrier_doc %}
-        {% for document in carrier_doc["documents"] %}
+        {% for document in carrier_doc["onbill_doc_types"] %}
           <li>
             <a href="#" onclick="z_event('carrier_template_edit_event', { template_id: '{{ document }}', carrier_id: '{{ carrier_id }}' });">
                 {{ carrier_id }}_{{ document }}
