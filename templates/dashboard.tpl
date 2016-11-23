@@ -55,6 +55,17 @@
         %}
       </div>
   </span>
+  {% if m.kazoo.kz_current_context_superadmin or m.kazoo.kz_current_context_reseller_status %}
+  {% wire action={connect signal={reseller_registrations_widget_tpl}
+                          action={update target="reseller_registrations_widget_tpl"
+                          template="reseller_registrations_widget.tpl"
+                          headline=_"System-wide registrations"}
+                 }
+  %}
+  <span id="reseller_registrations_widget_tpl">
+        {% include "reseller_registrations_widget.tpl" headline=_"System-wide registrations" %}
+  </span>
+  {% endif %}
 </div>
 
 {% endblock %}
