@@ -3,7 +3,7 @@
 
 -mod_title("OnNet billing").
 -mod_description("Zotonic based frontend for onnet_billing Kazoo whapp").
--mod_prio(13).
+-mod_prio(7).
 
 -export([
     observe_topmenu_element/2
