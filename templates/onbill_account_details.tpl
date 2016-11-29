@@ -23,11 +23,11 @@
             </th>
         </tr>
         <tr>
-            <th>{_ Account status _}</th>
+            <th>{_ Account status1 _}</th>
             <th>{% if account_doc[1]["enabled"] %}<span class="zprimary">{_ Active _}</span>
                             {% else %}<span class="zalarm">{_ Blocked _}{% endif %}</span>
                 <span class="pull-right" style="padding-right: 1em;">
-                  {{ m.config.mod_kazoo.local_currency_sign.value }}{{ m.kazoo[{current_account_credit account_id=account_id}]|format_price }}
+                  {{ m.kazoo[{current_account_credit account_id=account_id}]|currency_sign }}
                 </span>
             </th>
         </tr>
