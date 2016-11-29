@@ -23,7 +23,7 @@
             </th>
         </tr>
         <tr>
-            <th>{_ Account status1 _}</th>
+            <th>{_ Account status _}</th>
             <th>{% if account_doc[1]["enabled"] %}<span class="zprimary">{_ Active _}</span>
                             {% else %}<span class="zalarm">{_ Blocked _}{% endif %}</span>
                 <span class="pull-right" style="padding-right: 1em;">

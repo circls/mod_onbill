@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr><td>{_ Current balance _}</td><td>£{{ m.kazoo.current_account_credit }}</td></tr>
+        <tr><td>{_ Current balance _}</td><td>{{ m.kazoo.current_account_credit|currency_sign }}</td></tr>
         <tr style="height: 10px; color: white!important; background-color: white!important;"><td colspan="2"></td></tr>
         <tr><th colspan="2">Contacts:</th>
         <tr><td>E-mail</td><td>{{ m.kazoo[{kz_account_doc_field field1="contact" field2="billing" field3="email"}] }}</td></tr>
