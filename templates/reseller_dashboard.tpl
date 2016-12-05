@@ -42,4 +42,11 @@
   <span id="reseller_registrations_widget_tpl">
         {% include "reseller_registrations_widget.tpl" headline=_"System-wide registrations" %}
   </span>
+  {% wire action={connect signal={reseller_current_calls_widget_tpl}
+                          action={update target="reseller_current_calls_widget_tpl" template="reseller_current_calls_widget.tpl" headline=_"System-wide current calls"}
+                 }
+  %}
+  <span id="reseller_current_calls_widget_tpl">
+        {% include "reseller_current_calls_widget.tpl" headline=_"System-wide current calls" %}
+  </span>
 </div>
