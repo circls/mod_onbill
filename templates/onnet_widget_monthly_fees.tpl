@@ -38,7 +38,7 @@
           {% if service[2][1]["quantity"] > 0 %}
           {% with service[2][1]["cumulative_discount"] * service[2][1]["cumulative_discount_rate"] + service[2][1]["single_discount_rate"] as discount %} 
           <tr>
-             <td>{{ service[2][1]["item"]|pretty_freeforall }}</td>
+             <td>{{ service[2][1]["name"]|pretty_freeforall }}</td>
              <td class="text-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ service[2][1]["rate"]|format_price }}</td>
              <td class="text-center">{{ service[2][1]["quantity"] }}</td>
              <td class="text-center">{{ m.config.mod_kazoo.local_currency_sign.value }}{{ discount|format_price }}</td>
