@@ -2,7 +2,7 @@
 
 {% block widget_headline %}
   <select id="country_select" name="country" class="btn-xs btn-onnet" style="max-width:140px; height:20px; text-align:center;">
-    {% with ["RU","UK","US"] as options %}
+    {% with m.kazoo.numbers_countries_list as options %}
       {% for option in options %}
         <option value="{{ option }}">{{ option }}</option>
       {% endfor %}
