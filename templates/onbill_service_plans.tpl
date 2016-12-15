@@ -35,10 +35,10 @@
                                               action={ hide target="arrow_right_"++#dtid }
                                               action={ show target="arrow_down_"++#dtid }
        %}
-        {% for service_plan_available in m.kazoo.kz_service_plans_available %}
+        {% for service_plan in m.kazoo.kz_service_plans %}
           <li>
-            <a href="#" onclick="z_event('service_plan_edit_event', { service_plan_id: '{{ service_plan_available["id"] }}' });">
-                {{ service_plan_available["name"] }}
+            <a href="#" onclick="z_event('service_plan_edit_event', { service_plan_id: '{{ service_plan["id"] }}' });">
+                {{ service_plan["name"] }}
             </a>
           </li>
         {% endfor %}
